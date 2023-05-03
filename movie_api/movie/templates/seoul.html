@@ -8,7 +8,7 @@
 
     <ul>
         {% for item in unique_sigu %}
-            {{ item.sigu }}</a><br>
+            <a href="{% url 'movie:location_detail' item.sigu %}">{{ item.sigu }}</a><br>
         {% endfor %}
     </ul>
 </body>
