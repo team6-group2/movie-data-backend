@@ -1,3 +1,7 @@
 from django.contrib import admin
+from .models import Theater
 
-# Register your models here.
+class TheaterAdmin(admin.ModelAdmin):
+    list_display = ('theater_type', 'theater_name', 'location', 'sigu')
+
+admin.site.register(Theater, TheaterAdmin)
