@@ -31,6 +31,7 @@ ALLOWED_HOSTS = ['*']
 
 # 생성한 api앱과 rest_framework를 추가해준다.
 INSTALLED_APPS = [
+    'movie',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
