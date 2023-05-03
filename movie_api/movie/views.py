@@ -3,5 +3,11 @@ from django.http import HttpResponse
 # Create your views here.
 
 
-def index(request):
-    return HttpResponse("장고 테스트앱 입니다.")
+def home(request):
+    return render(request, 'home.html')
+
+def seoul(request):
+    return render(request, 'seoul.html')
+
+def gyeonggiAndIncheon(request):
+    return render(request, 'gyeonggiAndIncheon.html')
