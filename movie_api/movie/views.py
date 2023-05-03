@@ -14,3 +14,5 @@ def seoul(request):
 
 def gyeonggiAndIncheon(request):
     return render(request, 'gyeonggiAndIncheon.html')
+
+#def movieTimeDetail(request, sigu_name):
