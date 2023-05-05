@@ -4,18 +4,18 @@
     <title>영화 시간표</title>
 </head>
 <body>
-    <h1>{{ district }}</h1>
-
-    <ul>
-        {% for schedule in schedules %}
-            {{ schedule.movie_info.movie_title }}
-            {{ schedule.start_time }}
-            {{ schedule.theater_type }}
-            {{ schedule.theater_name }}
-            {{ schedule.city }}
-            {{ schedule.district }}
-            <br><br>
-        {% endfor %}
-    </ul>
+    {% for movie_title, theaters in movie_schedules.items %}
+        <h1>{{ movie_title }}</h1>
+        <ul>
+            {% for theater, start_times in theaters.items %}
+                <li>
+                    {{ theater.0 }} {{ theater.1 }}
+                    {% for start_time in start_times %}
+                        {{ start_time }}
+                    {% endfor %}
+                </li>
+            {% endfor %}
+        </ul>
+    {% endfor %}
 </body>
 </html>

@@ -18,4 +18,18 @@ def gyeonggiAndIncheon(request):
 
 def movieTimeDetail(request, city, district):
     schedules = TheaterMovieSchedule.objects.filter(district=district)
-    return render(request, 'movieTimeDetail.html', {'schedules': schedules})
+    movie_schedules = {}
+    for schedule in schedules:
+        movie_title = schedule.movie_info.movie_title
+        theater_type = schedule.theater_type
+        theater_name = schedule.theater_name
+        start_time = schedule.start_time
+        if movie_title in movie_schedules:
+            if (theater_type, theater_name) in movie_schedules[movie_title]:
+                movie_schedules[movie_title][(theater_type, theater_name)].append(start_time)
+            else:
+                movie_schedules[movie_title][(theater_type, theater_name)] = [start_time]
+        else:
+            movie_schedules[movie_title] = {(theater_type, theater_name): [start_time]}
+    print(movie_schedules)
+    return render(request, 'movieTimeDetail.html', {'movie_schedules': movie_schedules})
