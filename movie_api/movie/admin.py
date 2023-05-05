@@ -1,12 +1,10 @@
 from django.contrib import admin
-from .models import Theater, MovieTimeDetail
+from .models import MovieInfo, TheaterMovieSchedule
 
-class TheaterAdmin(admin.ModelAdmin):
-    list_display = ('theater_type', 'theater_name', 'location', 'sigu')
+@admin.register(MovieInfo)
+class MovieInfoAdmin(admin.ModelAdmin):
+    list_display = ['movie_title', 'director', 'cast', 'nation', 'age_limit', 'running_time']
 
-admin.site.register(Theater, TheaterAdmin)
-
-class MovieTimeDetailAdmin(admin.ModelAdmin):
-    list_display = ('theater_type', 'theater_name', 'location', 'movie_title', 'start_time')
-
-admin.site.register(MovieTimeDetail, MovieTimeDetailAdmin)
+@admin.register(TheaterMovieSchedule)
+class TheaterMovieScheduleAdmin(admin.ModelAdmin):
+    list_display = ['start_time', 'theater_type', 'theater_name', 'movie_info']

@@ -1,0 +1,50 @@
+[
+    {
+        "movie_title": "슈퍼 마리오 브라더스",
+        "director": "아론 호바스",
+         "cast": "크리스 프랫",
+        "nation": "미국, 일본",
+        "age_limit": "전체관람가",
+        "running_time": "92분"
+    },
+    {
+        "movie_title": "존 윅 4",
+        "director": "채드 스타헬스키",
+        "cast": "키아누 리브스",
+        "nation": "미국",
+        "age_limit": "청소년관람불가",
+        "running_time": "169분"
+    },
+    {
+        "movie_title": "드림",
+        "director": "이병헌",
+        "cast": "박서준",
+        "nation": "한국",
+        "age_limit": "12세이상관람가",
+        "running_time": "125분"
+    },
+    {
+        "movie_title": "더 퍼스트 슬램덩크",
+        "director": "이노우에 다케히코",
+        "cast": "강수진",
+        "nation": "일본",
+        "age_limit": "12세이상관람가",
+        "running_time": "125분"
+    },
+    {
+        "movie_title": "스즈메의 문단속",
+        "director": "신카이 마코토",
+        "cast": "하라 나노카",
+        "nation": "일본",
+        "age_limit": "12세이상관람가",
+        "running_time": "122분"
+    },
+    {
+        "movie_title": "리바운드",
+        "director": "장항준",
+        "cast": "안재홍",
+        "nation": "한국",
+        "age_limit": "12세이상관람가",
+        "running_time": "122분"
+    }
+]
