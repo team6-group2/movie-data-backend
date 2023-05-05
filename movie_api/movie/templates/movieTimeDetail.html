@@ -1,32 +1,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>{{ sigu }} 영화 상세 정보</title>
+    <title>영화 시간표</title>
 </head>
 <body>
-    <h1>{{ sigu }} 영화 상세 정보</h1>
+    <h1>{{ district }}</h1>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Theater Type</th>
-                <th>Theater Name</th>
-                <th>Location</th>
-                <th>Movie Title</th>
-                <th>Start Time</th>
-            </tr>
-        </thead>
-        <tbody>
-            {{% for index in theater_names|length %}
-                <tr>
-                    <td>{{ theater_types[index] }}</td>
-                    <td>{{ theater_names[index] }}</td>
-                    <td>{{ locations[index] }}</td>
-                    <td>{{ movie_titles[index] }}</td>
-                    <td>{{ start_times[index] }}</td>
-                </tr>
-            {% endfor %}}
-        </tbody>
-    </table>
+    <ul>
+        {% for schedule in schedules %}
+            {{ schedule.movie_info.movie_title }}
+            {{ schedule.start_time }}
+            {{ schedule.theater_type }}
+            {{ schedule.theater_name }}
+            {{ schedule.city }}
+            {{ schedule.district }}
+            <br><br>
+        {% endfor %}
+    </ul>
 </body>
 </html>
