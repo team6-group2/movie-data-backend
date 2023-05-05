@@ -1,0 +1,27 @@
+version: "3"
+
+services:
+  web:
+    build: 
+      context: ./movie_api
+      dockerfile: Dockerfile
+    command: python /movie_api/manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./movie_api/:/movie_api/
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+  db:
+    image: postgres:13
+    ports:
+      - "5432:5432"
+    volumes:
+      - /home/sanso/docker/postgres/docker-pg-vol/data:/var/lib/postgresql/data
+      - /home/sanso/docker/postgres/init/initData.sql:/docker-entrypoint-initdb.d/
+    environment:
+      - "POSTGRES_HOST_AUTH_METHOD=trust"
+
+volumes:
+  pg-data:
+    driver: local
