@@ -7,5 +7,6 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('seoul/', views.seoul, name='seoul'),
     path('gyeonggi-incheon/', views.gyeonggiAndIncheon, name='gyeonggiAndIncheon'),
-    path('<str:city>/<str:district>/', views.movieTimeDetail, name='movieTimeDetail')
+    path('<str:city>/<str:district>/', views.movieScheduleDetail, name='movieScheduleDetail'),
+    path('movie-detail/<str:movie_title>', views.movieInfoDetail, name='movieInfoDetail')
 ]

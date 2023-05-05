@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from movie.models import TheaterMovieSchedule
+from movie.models import TheaterMovieSchedule, MovieInfo
 #from .models import Theater, MovieTimeDetail
 # Create your views here.
 
@@ -16,7 +16,7 @@ def seoul(request):
 def gyeonggiAndIncheon(request):
     return render(request, 'gyeonggiAndIncheon.html')
 
-def movieTimeDetail(request, city, district):
+def movieScheduleDetail(request, city, district):
     schedules = TheaterMovieSchedule.objects.filter(district=district)
     movie_schedules = {}
     for schedule in schedules:
@@ -31,5 +31,16 @@ def movieTimeDetail(request, city, district):
                 movie_schedules[movie_title][(theater_type, theater_name)] = [start_time]
         else:
             movie_schedules[movie_title] = {(theater_type, theater_name): [start_time]}
-    print(movie_schedules)
-    return render(request, 'movieTimeDetail.html', {'movie_schedules': movie_schedules})
+    return render(request, 'movieScheduleDetail.html', {'movie_schedules': movie_schedules})
+
+def movieInfoDetail(request, movie_title):
+    movie_info_data = MovieInfo.objects.get(movie_title=movie_title)
+    movie_info = {}
+    movie_info["movie_title"] = movie_info_data.movie_title
+    movie_info["director"] = movie_info_data.director
+    movie_info["cast"] = movie_info_data.cast
+    movie_info["nation"] = movie_info_data.nation
+    movie_info["age_limit"] = movie_info_data.age_limit
+    movie_info["running_time"] = movie_info_data.running_time
+
+    return render(request, 'movieInfoDetail.html', {'movie_info': movie_info})
