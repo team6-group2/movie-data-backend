@@ -20,7 +20,7 @@ def start():
     scheduler.add_jobstore(DjangoJobStore(), 'djangojobstore')
     register_events(scheduler)
 
-    @scheduler.scheduled_job('cron', hour=00, minute=49, name='expiry_check')
+    @scheduler.scheduled_job('cron', hour=00, minute=1, name='expiry_check')
     def auto_check():
         print('[task start]')
         webdriver_options = webdriver.ChromeOptions()
