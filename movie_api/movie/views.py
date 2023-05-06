@@ -27,7 +27,12 @@ def redirectCorrectCity(request):
         #return redirect(reverse('movie:home'))
         return HttpResponse('잘못된 접근입니다.')
 
-def movieScheduleDetail(request, city, district):
+def redirectCorrectDistrict(request):
+    district = request.GET.get('district')
+    return redirect(reverse('movie:movieScheduleDetail', args=[district]))
+
+
+def movieScheduleDetail(request, district):
     schedules = TheaterMovieSchedule.objects.filter(district=district)
     movie_schedules = {}
     for schedule in schedules:
