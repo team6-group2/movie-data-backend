@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, reverse
 from django.http import HttpResponse
 from movie.models import TheaterMovieSchedule, MovieInfo
 #from .models import Theater, MovieTimeDetail
@@ -15,6 +15,17 @@ def seoul(request):
 
 def gyeonggiAndIncheon(request):
     return render(request, 'gyeonggiAndIncheon.html')
+
+def redirectCorrectCity(request):
+    city = request.GET.get('city')
+
+    if city == 'seoul':
+        return redirect(reverse('movie:seoul'))
+    elif city == 'gyeonggi':
+        return redirect(reverse('movie:gyeonggiAndIncheon'))
+    else:
+        #return redirect(reverse('movie:home'))
+        return HttpResponse('잘못된 접근입니다.')
 
 def movieScheduleDetail(request, city, district):
     schedules = TheaterMovieSchedule.objects.filter(district=district)
