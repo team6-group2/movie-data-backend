@@ -14,7 +14,17 @@ def seoul(request):
     return render(request, 'seoul.html', {'districts': district_list})
 
 def gyeonggiAndIncheon(request):
-    return render(request, 'gyeonggiAndIncheon.html')
+    gyeonggi_districts = TheaterMovieSchedule.objects.filter(city='경기').values('district').distinct()
+    incheon_districts = TheaterMovieSchedule.objects.filter(city='인천').values('district').distinct()
+    gyeonggi_district_list = [district['district'] for district in gyeonggi_districts]
+    incheon_district_list = [district['district'] for district in incheon_districts]
+
+    districts = {
+        'gyeonggi_districts' : gyeonggi_district_list, 
+        'incheon_districts' : incheon_district_list
+    }
+    print(districts)
+    return render(request, 'gyeonggiAndIncheon.html', districts)
 
 def movieScheduleDetail(request, city, district):
     schedules = TheaterMovieSchedule.objects.filter(district=district)
