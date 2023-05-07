@@ -5,6 +5,7 @@ from movie.models import TheaterMovieSchedule, MovieInfo
 # Create your views here.
 
 
+
 def home(request):
     return render(request, 'home.html')
 
@@ -13,18 +14,17 @@ def seoul(request):
     district_list = [district['district'] for district in districts]
     return render(request, 'seoul.html', {'districts': district_list})
 
-def gyeonggiAndIncheon(request):
-    gyeonggi_districts = TheaterMovieSchedule.objects.filter(city='경기').values('district').distinct()
-    incheon_districts = TheaterMovieSchedule.objects.filter(city='인천').values('district').distinct()
-    gyeonggi_district_list = [district['district'] for district in gyeonggi_districts]
-    incheon_district_list = [district['district'] for district in incheon_districts]
+def gyeonggi(request):
+    districts = TheaterMovieSchedule.objects.filter(city='경기').values('district').distinct()
+    district_list = [district['district'] for district in districts]
+    
+    return render(request, 'gyeonggi.html', {'districts': district_list})
 
-    districts = {
-        'gyeonggi_districts' : gyeonggi_district_list, 
-        'incheon_districts' : incheon_district_list
-    }
-    print(districts)
-    return render(request, 'gyeonggiAndIncheon.html', districts)
+def incheon(request):
+    districts = TheaterMovieSchedule.objects.filter(city='인천').values('district').distinct()
+    district_list = [district['district'] for district in districts]
+
+    return render(request, 'incheon.html', {'districts': district_list})
 
 def redirectCorrectCity(request):
     city = request.GET.get('city')
@@ -32,14 +32,18 @@ def redirectCorrectCity(request):
     if city == 'seoul':
         return redirect(reverse('movie:seoul'))
     elif city == 'gyeonggi':
-        return redirect(reverse('movie:gyeonggiAndIncheon'))
+        return redirect(reverse('movie:gyeonggi'))
+    elif city == 'incheon':
+        return redirect(reverse('movie:incheon'))
     else:
         #return redirect(reverse('movie:home'))
         return HttpResponse('잘못된 접근입니다.')
 
 def redirectCorrectDistrict(request):
     district = request.GET.get('district')
-    return redirect(reverse('movie:movieScheduleDetail', args=[district]))
+    # return redirect(reverse('movie:movieScheduleDetail', args=[district]))
+    return redirect('movie:movieScheduleDetail', district=district)
+
 
 
 def movieScheduleDetail(request, district):

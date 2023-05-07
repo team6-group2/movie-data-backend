@@ -9,7 +9,8 @@ urlpatterns = [
     path('district/', views.redirectCorrectDistrict, name='district'),
 
     path('seoul/', views.seoul, name='seoul'),
-    path('gyeonggi-incheon/', views.gyeonggiAndIncheon, name='gyeonggiAndIncheon'),
+    path('gyeonggi/', views.gyeonggi, name='gyeonggi'),
+    path('incheon/', views.incheon, name='incheon'),
     
 
     path('<str:district>/', views.movieScheduleDetail, name='movieScheduleDetail'),

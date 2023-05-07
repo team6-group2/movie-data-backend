@@ -31,15 +31,16 @@ ALLOWED_HOSTS = ['*']
 
 # 생성한 api앱과 rest_framework를 추가해준다.
 INSTALLED_APPS = [
-    'movie',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'bootstrap4',
     'api',
-    'rest_framework'
+    'movie',
 ]
 
 #언어를 한국어로 변경해준다.
@@ -64,7 +65,7 @@ ROOT_URLCONF = "movie_api.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [], # 템플릿 경로
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
