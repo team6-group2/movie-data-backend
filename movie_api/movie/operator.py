@@ -3,7 +3,7 @@ from django_apscheduler.jobstores import register_events, DjangoJobStore
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 from sqlalchemy import create_engine
-import pandas as pd
+import re
 from .models import *
 from django.db import IntegrityError
 
@@ -20,7 +20,7 @@ def start():
     scheduler.add_jobstore(DjangoJobStore(), 'djangojobstore')
     register_events(scheduler)
 
-    @scheduler.scheduled_job('cron', hour=00, minute=1, name='expiry_check')
+    @scheduler.scheduled_job('cron', hour=0, minute=1, name='expiry_check')
     def auto_check():
         print('[task start]')
         webdriver_options = webdriver.ChromeOptions()
@@ -42,13 +42,15 @@ def start():
                 )
                 # print(f'{movie_info.movie_title} 정보 입력 완료')
             except IntegrityError:
-                movie_info = MovieInfo.objects.get(movie_title=row['movie_title'])
+                # movie_info = MovieInfo.objects.get(movie_title=row['movie_title'])
                 # print(f'{movie_info.movie_title} 정보 이미 존재')
+                pass
 
         for df in [today_movie_cgv(driver), today_movie_lottecinema(driver)]:
             for idx, row in df.iterrows():
                 try:
-                    movie_info = MovieInfo.objects.get(movie_title=row['movie_title'])
+                    search_term = re.sub(r'[-]', '. ', row['movie_title'])
+                    movie_info = MovieInfo.objects.get(movie_title__regex=search_term)
                 except MovieInfo.DoesNotExist:
                     print(f"{row['movie_title']} 정보 없음")
                     continue
@@ -60,6 +62,7 @@ def start():
                         theater_name=row['theater_name'],
                         city=row['city'],
                         # district=row['district']
+                        district=''
                     )
                     # print(f"{movie_info.movie_title} {row['theater_name']} 스케줄 입력 완료")
                 except IntegrityError:
@@ -70,19 +73,3 @@ def start():
         print('[task end]')
 
     scheduler.start()
-
-# webdriver_options = webdriver.ChromeOptions()
-# webdriver_options.add_argument('headless')  # 화면 안보이기
-# driver = webdriver.Chrome(ChromeDriverManager().install(), options=webdriver_options)
-
-# print('current start')
-# engine = create_engine('sqlite://///Users/0bver/project/6-2/movie-data-backend/movie_api/db.sqlite3')
-# current_movie(driver).to_sql('movie_movieinfo', if_exists='replace', con=engine, index=False)
-# print('cgv start')
-# today_movie_cgv(driver).to_csv('cgv.csv')
-# print('lotte start')
-# today_movie_lottecinema(driver).to_csv('lotte.csv')
-# print('megabox start')
-# today_movie_megabox(driver).to_csv('megabox.csv')
-
-# driver.quit()
