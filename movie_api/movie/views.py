@@ -1,6 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, reverse
 from django.http import HttpResponse
-from movie.models import TheaterMovieSchedule
+from movie.models import TheaterMovieSchedule, MovieInfo
 #from .models import Theater, MovieTimeDetail
 # Create your views here.
 
@@ -16,26 +16,47 @@ def seoul(request):
 def gyeonggiAndIncheon(request):
     return render(request, 'gyeonggiAndIncheon.html')
 
-def movieTimeDetail(request, sigu):
-    # Theater와 MovieTimeDetail 테이블을 조인하여 필요한 필드 값을 가져옵니다.
-    movie_details = MovieTimeDetail.objects.filter(theater__sigu=sigu)
+def redirectCorrectCity(request):
+    city = request.GET.get('city')
 
-    # 필요한 필드 값을 리스트로 저장합니다.
-    theater_names = [detail.theater.theater_name for detail in movie_details]
-    theater_types = [detail.theater.theater_type for detail in movie_details]
-    locations = [detail.theater.location for detail in movie_details]
-    movie_titles = [detail.movie_title for detail in movie_details]
-    start_times = [detail.start_time for detail in movie_details]
+    if city == 'seoul':
+        return redirect(reverse('movie:seoul'))
+    elif city == 'gyeonggi':
+        return redirect(reverse('movie:gyeonggiAndIncheon'))
+    else:
+        #return redirect(reverse('movie:home'))
+        return HttpResponse('잘못된 접근입니다.')
 
-    # 필요한 필드 값을 context에 저장합니다.
-    context = {
-        'theater_names': theater_names,
-        'theater_types': theater_types,
-        'locations': locations,
-        'movie_titles': movie_titles,
-        'start_times': start_times,
-        'sigu': sigu
-    }
-    print("---------------------------------------------------------------------------------------------")
-    print(movie_details)
-    return render(request, 'movieTimeDetail.html', context)
+def redirectCorrectDistrict(request):
+    district = request.GET.get('district')
+    return redirect(reverse('movie:movieScheduleDetail', args=[district]))
+
+
+def movieScheduleDetail(request, district):
+    schedules = TheaterMovieSchedule.objects.filter(district=district)
+    movie_schedules = {}
+    for schedule in schedules:
+        movie_title = schedule.movie_info.movie_title
+        theater_type = schedule.theater_type
+        theater_name = schedule.theater_name
+        start_time = schedule.start_time
+        if movie_title in movie_schedules:
+            if (theater_type, theater_name) in movie_schedules[movie_title]:
+                movie_schedules[movie_title][(theater_type, theater_name)].append(start_time)
+            else:
+                movie_schedules[movie_title][(theater_type, theater_name)] = [start_time]
+        else:
+            movie_schedules[movie_title] = {(theater_type, theater_name): [start_time]}
+    return render(request, 'movieScheduleDetail.html', {'movie_schedules': movie_schedules})
+
+def movieInfoDetail(request, movie_title):
+    movie_info_data = MovieInfo.objects.get(movie_title=movie_title)
+    movie_info = {}
+    movie_info["movie_title"] = movie_info_data.movie_title
+    movie_info["director"] = movie_info_data.director
+    movie_info["cast"] = movie_info_data.cast
+    movie_info["nation"] = movie_info_data.nation
+    movie_info["age_limit"] = movie_info_data.age_limit
+    movie_info["running_time"] = movie_info_data.running_time
+
+    return render(request, 'movieInfoDetail.html', {'movie_info': movie_info})

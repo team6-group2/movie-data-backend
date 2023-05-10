@@ -1,0 +1,15 @@
+<!-- movieInfoDetail.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>영화 상세 정보</title>
+</head>
+<body>
+    <h1>영화 상세 정보</h1>
+    <ul>
+        {% for data in movie_info.items %}
+            <li>{{ data.0 }}: {{ data.1 }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
