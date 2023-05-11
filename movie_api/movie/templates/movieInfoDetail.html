@@ -1,15 +1,59 @@
-<!-- movieInfoDetail.html -->
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
     <title>영화 상세 정보</title>
+    
+    <style>
+        .movie-info {
+            font-family: Arial, sans-serif;
+            font-size: 18px;
+            line-height: 1.5;
+            margin-top: 20px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        
+        .movie-info h1 {
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        
+        .movie-info label {
+            font-weight: bold;
+        }
+        
+        .movie-info span {
+            margin-left: 5px;
+        }
+    </style>
 </head>
 <body>
-    <h1>영화 상세 정보</h1>
-    <ul>
-        {% for data in movie_info.items %}
-            <li>{{ data.0 }}: {{ data.1 }}</li>
-        {% endfor %}
-    </ul>
+    <div class="movie-info">
+        <h1>{{ movie_info.movie_title }}</h1>
+        <p>
+            <label>감독:</label>
+            <span>{{ movie_info.director }}</span>
+        </p>
+        <p>
+            <label>배우:</label>
+            <span>{{ movie_info.cast }}</span>
+        </p>
+        <p>
+            <label>국가:</label>
+            <span>{{ movie_info.nation }}</span>
+        </p>
+        <p>
+            <label>등급:</label>
+            <span>{{ movie_info.age_limit }}</span>
+        </p>
+        <p>
+            <label>러닝타임:</label>
+            <span>{{ movie_info.running_time }}</span>
+        </p>
+    </div>
 </body>
 </html>
