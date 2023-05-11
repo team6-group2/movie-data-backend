@@ -1,4 +1,4 @@
-{% load static %}
+{% load bootstrap4 %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,14 +21,14 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-6">
-                    <h2 class="text-center">원하는 지역을 선택하세요</h2>
-                    <form class="option-box" method="get" action="{% url 'movie:city' %}">
-                        <div class="form-group">
-                            <select class="form-control" name="city" id="city">
+                    <h2 class="text-center">상세 지역을 선택하세요</h2>
+                    <form class="option-box" method="get" action="{% url 'movie:district' %}">
+                        <div class="form-group d-flex">
+                            <select class="form-control" name="district" id="district">
                                 <option value="" disabled selected>지역을 선택하세요</option>
-                                <option value="seoul">서울</option>
-                                <option value="gyeonggi">경기</option>
-                                <option value="incheon">인천</option>
+                                {% for district in districts %}
+                                    <option value="{{ district }}">{{ district }}</option>
+                                {% endfor %}
                             </select>
                         </div>
                         <div class="text-center">
@@ -49,5 +49,15 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
             integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
             crossorigin="anonymous"></script>
+    {% comment %} <h1>경기</h1>
+    {% for district in gyeonggi_districts %}
+        <a href="{% url 'movie:movieScheduleDetail' city='gyeonggi-incheon' district=district %}">{{ district }}</a><br>
+    {% endfor %}
+
+
+    <h1>인천</h1>
+    {% for district in incheon_districts %}
+        <a href="{% url 'movie:movieScheduleDetail' city='gyeonggi-incheon' district=district %}">{{ district }}</a><br>
+    {% endfor %} {% endcomment %}
 </body>
 </html>

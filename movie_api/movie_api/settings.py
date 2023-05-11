@@ -31,16 +31,20 @@ ALLOWED_HOSTS = ['*']
 
 # 생성한 api앱과 rest_framework를 추가해준다.
 INSTALLED_APPS = [
-    'movie',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+<<<<<<< HEAD
+    'rest_framework',
+    'bootstrap4',
+=======
     'django_apscheduler',
+>>>>>>> main
     'api',
-    'rest_framework'
+    'movie',
 ]
 
 APSCHEDULER_DATETIME_FORMAT = "N j, Y, f:s a"  # Default
@@ -69,7 +73,7 @@ ROOT_URLCONF = "movie_api.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [], # 템플릿 경로
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
