@@ -6,10 +6,8 @@ pytz==2023.3
 setuptools==66.0.0
 sqlparse==0.4.4
 wheel==0.38.4
-<<<<<<< HEAD
 django-bootstrap4
 bootstrap4
-=======
 selenium==4.9.0
 beautifulsoup4==4.12.2
 bs4==0.0.1
@@ -19,4 +17,3 @@ webdriver-manager==3.8.6
 pandas==2.0.1
 sqlalchemy
 psycopg2-binary==2.9.3
->>>>>>> main
