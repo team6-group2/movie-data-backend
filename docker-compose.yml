@@ -11,17 +11,24 @@ services:
     ports:
       - 8000:8000
     depends_on:
-      - db
+      db:
+        condition: service_healthy
+
   db:
     image: postgres:13
     ports:
-      - "5432:5432"
+      - 5432:5432
     volumes:
       - ./docker/postgres/docker-pg-vol/data:/var/lib/postgresql/data
       - ./docker/postgres/init/initData.sql:/docker-entrypoint-initdb.d/
     environment:
       - "POSTGRES_HOST_AUTH_METHOD=trust"
-
+    healthcheck:
+          test: ["CMD-SHELL", "pg_isready -U postgres || exit 1"]
+          interval: 10s
+          timeout: 5s
+          retries: 5
 volumes:
   pg-data:
     driver: local
+ 
