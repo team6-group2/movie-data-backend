@@ -19,11 +19,11 @@ def today_movie_from_cgv(driver):
         try:
             driver.get(f"http://www.cgv.co.kr/theaters/?areacode={areacode}&theaterCode={theaterCode}&date={today}")
             driver.implicitly_wait(10)
-            iframe = driver.find_element(By.XPATH, "//iframe[@id='ifrm_movie_time_table']")
+            iframe = driver.find_element(By.ID, "ifrm_movie_time_table")
             driver.switch_to.frame(iframe)
+            # print(driver.page_source)
             iframe_page_source = BeautifulSoup(driver.page_source, "html.parser")
             movies_data = iframe_page_source.select("body > div > div.sect-showtimes > ul > li")
-
             temp_data = []
             for movie_data in movies_data:
                 movie_title = movie_data.div.find("div", "info-movie").a.text.strip()
