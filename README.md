@@ -30,11 +30,11 @@
 ​
 1. 프로젝트 깃 레포지토리 클론
    ```sh
-   git clone https://github.com/team6-group2/movie-data-backend.git 
+   $ git clone https://github.com/team6-group2/movie-data-backend.git 
    ```
 2. docker containter 실행
    ```sh
-   docker-compose up -d --build
+   $ docker-compose up -d --build
    ```
 3. djangojob 테이블에 데이터 추가
    ```sh
