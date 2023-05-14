@@ -68,8 +68,8 @@ def start():
                         theater_type=row['theater_type'],
                         theater_name=row['theater_name'],
                         city=row['city'],
-                        # district=row['district']
-                        district=''
+                        district=row['district']
+#                         district=''
                     )
                     # print(f"{movie_info.movie_title} {row['theater_name']} 스케줄 입력 완료")
                 except IntegrityError:
