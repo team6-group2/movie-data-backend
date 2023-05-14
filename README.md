@@ -5,6 +5,9 @@
 ### 1. 내용  
 영화관 3사(CGV, MEGABOC, LOTTECINEMA) 상영 시간표 데이터를 매일 자정에 스크래핑해서, 상영 정보를 일일히 찾아보지 않아도 특정 지역의 모든 영화 상영 정보를 한눈에 볼 수 있습니다.
 
+![screen-recording](https://github.com/team6-group2/movie-data-backend/assets/65884076/65c9acbb-d341-4a83-9d1b-b7f5475e2436)
+
+
 ### 2. 프로젝트 기간 : 2023.05.01 ~ 2023.05.05
 ​
 ### 3. 참여자 정보 및 각 역할
