@@ -17,8 +17,9 @@
 |김영준|다음 영화 정보 크롤링, 장고 스케줄러|
 |박다혜|메가박스 크롤링, 장고|
 |조민동|CGV 크롤링, Docker환경에 DB 구축|  
-​
+
 ### 4. 활용 기술 및 프레임워크
+|:---:|:---:|
 |데이터 크롤링|selenium, BeautifulSoup|
 |프론트엔드|Django, Bootstrap4|
 |백엔드|Django, postgresql|
