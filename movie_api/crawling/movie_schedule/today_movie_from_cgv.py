@@ -12,7 +12,7 @@ def today_movie_from_cgv(driver):
         if areacode == "01":
             city = "서울"
         elif areacode == "02":
-            city = "경기도"
+            city = "경기"
         elif areacode == "202":
             city = "인천"
 
