@@ -10,20 +10,25 @@ from selenium.webdriver.common.by import By
 def today_movie_from_cgv(driver):
     def crawling_title_starttime(areacode, theaterCode, theaterName, today):
         if areacode == "01":
-            location = "서울"
+            city = "서울"
         elif areacode == "02":
-            location = "경기도"
+            city = "경기도"
         elif areacode == "202":
-            location = "인천"
+            city = "인천"
 
         try:
             driver.get(f"http://www.cgv.co.kr/theaters/?areacode={areacode}&theaterCode={theaterCode}&date={today}")
             driver.implicitly_wait(10)
-            iframe = driver.find_element(By.XPATH, "//iframe[@id='ifrm_movie_time_table']")
+            district=driver.find_element(By.XPATH, "//*[@id='contents']/div[2]/div[1]/div/div[2]/div[1]/strong").text
+            if areacode=="02":
+                district=re.search(r"\b\w+시\b", district).group()
+            else:
+                district=re.search(r"\b\w+구\b", district).group()
+            iframe = driver.find_element(By.ID, "ifrm_movie_time_table")
             driver.switch_to.frame(iframe)
+            # print(driver.page_source)
             iframe_page_source = BeautifulSoup(driver.page_source, "html.parser")
             movies_data = iframe_page_source.select("body > div > div.sect-showtimes > ul > li")
-
             temp_data = []
             for movie_data in movies_data:
                 movie_title = movie_data.div.find("div", "info-movie").a.text.strip()
@@ -35,8 +40,7 @@ def today_movie_from_cgv(driver):
                         if not start_time:
                             start_time = t.a.em.text
 
-                        temp_data.append({"theater_type": "CGV", "theater_name": theaterName, "city": location,
-                                     "movie_title": movie_title, "start_time": start_time})
+                        temp_data.append({"theater_type": "CGV", "theater_name": theaterName, "city": city, "district":district, "movie_title": movie_title, "start_time": start_time})
             return temp_data
         except Exception as error:
             print(error)
@@ -58,7 +62,7 @@ def today_movie_from_cgv(driver):
                 break
 
         df = pd.DataFrame(data)
-        df = df[["theater_type", "theater_name", "city", "movie_title", "start_time"]]
+        df = df[["theater_type", "theater_name", "city", "district", "movie_title", "start_time"]]
         return df
 
     return crawling_location_theatername()

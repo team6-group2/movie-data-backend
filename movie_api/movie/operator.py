@@ -20,11 +20,18 @@ def start():
     scheduler.add_jobstore(DjangoJobStore(), 'djangojobstore')
     register_events(scheduler)
 
-    @scheduler.scheduled_job('cron', hour=0, minute=1, name='expiry_check')
+    @scheduler.scheduled_job('cron', hour=0, minute=1, id="111", name='expiry_check')
     def auto_check():
         print('[task start]')
-        webdriver_options = webdriver.ChromeOptions()
-        # webdriver_options.add_argument('headless')  # 화면 안보이기 주석 해제하면 cgv크롤링이 안됨
+        # scheduler.add_jobstore(DjangoJobStore(), 'djangojobstore')
+        webdriver_options = webdriver.ChromeOptions() 
+        webdriver_options.add_argument("--headless=new")
+        webdriver_options.add_argument('--no-sandbox')
+        webdriver_options.add_argument('--disable-dev-shm-usage')
+        webdriver_options.add_argument("--disable-gpu")
+        webdriver_options.add_argument('window-size=1920x1080')
+        webdriver_options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36")
+        webdriver_options.add_argument("lang=ko_KR")
         driver = webdriver.Chrome(ChromeDriverManager().install(), options=webdriver_options)
 
         MovieInfo.objects.all().delete()
@@ -61,8 +68,8 @@ def start():
                         theater_type=row['theater_type'],
                         theater_name=row['theater_name'],
                         city=row['city'],
-                        # district=row['district']
-                        district=''
+                        district=row['district']
+#                         district=''
                     )
                     # print(f"{movie_info.movie_title} {row['theater_name']} 스케줄 입력 완료")
                 except IntegrityError:

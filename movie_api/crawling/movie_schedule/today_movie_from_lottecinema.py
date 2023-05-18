@@ -62,12 +62,12 @@ def today_movie_from_lottecinema(driver):
 
                 for move_res in movies_response:
                     move_data = {"theater_type": "LOTTE CINEMA", "theater_name": move_res['CinemaNameKR'],
-                                 "city": city, "movie_title": move_res['MovieNameKR'],
+                                 "city": city, "district":" ", "movie_title": move_res['MovieNameKR'],
                                  "start_time": move_res['StartTime']}
 
                     all_movie.append(move_data)
 
-        df = pd.DataFrame(all_movie, columns=["theater_type", "theater_name", "city", "movie_title", "start_time"])
+        df = pd.DataFrame(all_movie, columns=["theater_type", "theater_name", "city", "district", "movie_title", "start_time"])
         return df
 
     return getMovieInfo()
